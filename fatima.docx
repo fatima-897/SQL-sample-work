@@ -1,0 +1,69 @@
+1. Show the names of all patients who live in Lahore.
+
+SELECT name
+FROM patients
+WHERE city = 'Lahore';
+
+2. List all doctors with a fee greater than 800.
+
+
+SELECT * FROM doctors
+WHERE fee > 800;
+
+3. Show the patient name, doctor name, and appointment date for all appointments.
+
+
+SELECT patients.name AS patient_name, doctors.name AS doctor_name, appointments.appointment_date
+FROM appointments
+JOIN patients  ON appointments.patient_id = patients.patient_id
+JOIN doctors  ON appointments.doctor_id = doctors.doctor_id;
+
+4. Display the list of all completed appointments along with doctor specialization
+
+SELECT appointments.appointment_id, doctors.name AS doctor_name, doctors.specialization
+FROM appointments 
+JOIN doctors  ON appointments.doctor_id = doctors.doctor_id
+WHERE appointments.status = 'Completed';
+
+5. List the medicine names prescribed in appointment ID 101.
+
+
+SELECT medicines.name FROM prescriptions 
+JOIN medicines  ON prescriptions.medicine_id = medicines.medicine_id
+WHERE prescriptions.appointment_id = 101;
+
+6. Show each doctor's name with the number of appointments they have.
+
+SELECT doctors.name, COUNT(appointments.appointment_id) AS total_appointments
+FROM doctors 
+LEFT JOIN appointments  ON doctors.doctor_id = appointments.doctor_id
+GROUP BY doctors.name;
+
+
+
+
+7. Calculate the total quantity of each medicine prescribed (group by medicine).
+
+
+SELECT medicines.name, SUM(prescriptions.quantity) AS total_quantity
+FROM prescriptions
+JOIN medicines  ON prescriptions.medicine_id = medicines.medicine_id
+GROUP BY medicines.name;
+
+8. Find the total billing amount collected for each doctor (only for 'Paid' bills).
+
+SELECT doctors.name, SUM(billing.amount) AS total_collected
+FROM billing 
+JOIN appointments  ON billing.appointment_id = appointments.appointment_id
+JOIN doctors  ON appointments.doctor_id = doctors.doctor_id
+WHERE billing.payment_status = 'Paid'
+GROUP BY doctors.name;
+
+9. Insert a new patient named 'Tariq', Male, Age 33, from Karachi.
+
+INSERT INTO patients (patient_id, name, gender, age, city) VALUES (6, 'Tariq', 'Male', 33, 'Karachi');
+
+10. Delete all appointments where status is 'Pending'.
+
+DELETE FROM appointments
+WHERE status = 'Pending';
