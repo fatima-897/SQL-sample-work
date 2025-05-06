@@ -44,9 +44,6 @@
             <td><?php echo $row['email']; ?></td>
           </tr>
 
-
-
-
         <?php
         }
         ?>
